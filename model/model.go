@@ -3,12 +3,12 @@ package model
 import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
-	"strings"
+	"log"
 )
 
 type Data struct {
-	Path string `json:"path"`
-	Data string `json:"data"`
+	Path string `json:"path" gorm:"primary_key;type:string;not null"`
+	Data string `json:"data" gorm:"type:string"`
 }
 
 var DB *gorm.DB
@@ -17,33 +17,31 @@ func InitDB() (*gorm.DB, error) {
 	db, err := gorm.Open("sqlite3", "./data.db")
 	if err == nil {
 		DB = db
+		db.AutoMigrate(&Data{})
 		return DB, err
+	} else {
+		log.Fatal(err)
 	}
 	return nil, err
 }
 
-func Get(path string) ([]*Data, error) {
-	var data []*Data
-	var err error
-	path = strings.ToLower(path)
-	err = DB.Where("path", path).Find(&data).Error
+func Query(path string) (*Data, error) {
+	data := new(Data)
+	err := DB.Where("path = ?", path).First(&data).Error
 	return data, err
 }
 
-func (data *Data) Post() error {
-	var err error
-	err = DB.Create(data).Error
+func Create(data *Data) error {
+	err := DB.Create(data).Error
 	return err
 }
 
-func (data *Data) Delete() error {
-	var err error
-	err = DB.Delete(data).Error
+func Delete(path string) error {
+	err := DB.Where("path = ?", path).Delete(Data{}).Error
 	return err
 }
 
-func (data *Data) Put() error {
-	var err error
-	err = DB.Update(data).Error
+func Update(data *Data) error {
+	err := DB.Where("path = ?", data.Path).Update("data", data).Error
 	return err
 }

@@ -2,8 +2,8 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"github.com/gin-gonic/gin"
+	"log"
 	"os"
 	"rest-server/model"
 	"strconv"
@@ -25,7 +25,7 @@ func main() {
 	flag.Parse()
 	db, err := model.InitDB()
 	if err != nil {
-		_ = fmt.Errorf("failed to init database")
+		log.Fatal("failed to init database")
 	}
 	defer db.Close()
 	server := gin.Default()
@@ -34,5 +34,8 @@ func main() {
 	if realPort == "" {
 		realPort = strconv.Itoa(*port)
 	}
-	_ = server.Run(":" + realPort)
+	err = server.Run(":" + realPort)
+	if err != nil {
+		log.Print(err)
+	}
 }
