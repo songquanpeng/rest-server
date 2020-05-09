@@ -4,13 +4,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"net/http"
-	"rest-server/model"
 	"strings"
 )
 
 func Get(c *gin.Context) {
 	path := strings.ToLower(c.Param("path"))
-	data, err := model.Query(path)
+	data, err := Query(path)
 	if err == nil {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "ok",
@@ -25,11 +24,11 @@ func Get(c *gin.Context) {
 
 func Post(c *gin.Context) {
 	path := strings.ToLower(c.Param("path"))
-	var data model.Data
+	var data Data
 	data.Path = path
 	body, _ := ioutil.ReadAll(c.Request.Body)
 	data.Data = string(body)
-	var err = model.Create(&data)
+	var err = Create(&data)
 	if err == nil {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "ok",
@@ -42,11 +41,11 @@ func Post(c *gin.Context) {
 }
 
 func Put(c *gin.Context) {
-	var data model.Data
+	var data Data
 	data.Path = strings.ToLower(c.Param("path"))
 	body, _ := ioutil.ReadAll(c.Request.Body)
 	data.Data = string(body)
-	var err = model.Update(&data)
+	var err = Update(&data)
 	if err == nil {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "ok",
@@ -60,7 +59,7 @@ func Put(c *gin.Context) {
 
 func Delete(c *gin.Context) {
 	path := strings.ToLower(c.Param("path"))
-	err := model.Delete(path)
+	err := Remove(path)
 	if err == nil {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "ok",

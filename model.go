@@ -1,4 +1,4 @@
-package model
+package main
 
 import (
 	"github.com/jinzhu/gorm"
@@ -36,7 +36,7 @@ func Create(data *Data) error {
 	return err
 }
 
-func Delete(path string) error {
+func Remove(path string) error {
 	err := DB.Where("path = ?", path).Delete(Data{}).Error
 	return err
 }

@@ -5,7 +5,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"os"
-	"rest-server/model"
 	"strconv"
 )
 
@@ -22,8 +21,11 @@ func SetRouter(router *gin.Engine) {
 }
 
 func main() {
+	if os.Getenv("GIN_MODE") != "debug" {
+		gin.SetMode(gin.ReleaseMode)
+	}
 	flag.Parse()
-	db, err := model.InitDB()
+	db, err := InitDB()
 	if err != nil {
 		log.Fatal("failed to init database")
 	}

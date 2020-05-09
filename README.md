@@ -2,7 +2,6 @@
 ## Description
 + Rest server implemented in GoLang.
 + Out-of-the-box feature.
-+ 
 
 ## TODO List
 - [ ] Implement basic REST api (GET, POST, PUT & DELETE).
@@ -17,8 +16,6 @@ Usage of server:
         specify the server listening port. (default 3000)
   -token string
         specify the private token. (default "token")
-
-
 ```
 
 Example: `./server.exe -port 80 -token private`
