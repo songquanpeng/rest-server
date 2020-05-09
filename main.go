@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"log"
 	"os"
@@ -14,6 +15,7 @@ var (
 )
 
 func SetRouter(router *gin.Engine) {
+	router.Use(cors.Default())
 	router.GET("/*path", Get)
 	router.POST("/*path", Post)
 	router.PUT("/*path", Put)

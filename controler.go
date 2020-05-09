@@ -12,12 +12,14 @@ func Get(c *gin.Context) {
 	path := strings.ToLower(c.Param("path"))
 	data, err := Query(path)
 	if err == nil {
+		message := "ok"
+		jsonData := json.RawMessage(data.Data)
 		c.JSON(http.StatusOK, gin.H{
-			"message": "ok",
-			"data":    json.RawMessage(data.Data),
+			"message": message,
+			"data":    jsonData,
 		})
 	} else {
-		c.JSON(http.StatusInternalServerError, gin.H{
+		c.JSON(http.StatusOK, gin.H{
 			"message": err.Error(),
 		})
 	}
@@ -35,7 +37,7 @@ func Post(c *gin.Context) {
 			"message": "ok",
 		})
 	} else {
-		c.JSON(http.StatusInternalServerError, gin.H{
+		c.JSON(http.StatusOK, gin.H{
 			"message": err.Error(),
 		})
 	}
@@ -52,7 +54,7 @@ func Put(c *gin.Context) {
 			"message": "ok",
 		})
 	} else {
-		c.JSON(http.StatusInternalServerError, gin.H{
+		c.JSON(http.StatusOK, gin.H{
 			"message": err.Error(),
 		})
 	}
@@ -66,7 +68,7 @@ func Delete(c *gin.Context) {
 			"message": "ok",
 		})
 	} else {
-		c.JSON(http.StatusInternalServerError, gin.H{
+		c.JSON(http.StatusOK, gin.H{
 			"message": err.Error(),
 		})
 	}
