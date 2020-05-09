@@ -42,6 +42,6 @@ func Remove(path string) error {
 }
 
 func Update(data *Data) error {
-	err := DB.Model(&data).Where("path = ?", data.Path).Update("data", data).Error
+	err := DB.Where(Data{Path: data.Path}).Assign(Data{Data: data.Data}).FirstOrCreate(&data).Error
 	return err
 }

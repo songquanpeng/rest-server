@@ -4,7 +4,7 @@
 + Out-of-the-box feature.
 
 ## TODO List
-- [ ] Implement basic REST api (GET, POST, PUT & DELETE).
+- [x] Implement basic REST api (GET, POST, PUT & DELETE).
 - [ ] Support token authentication.
 - [ ] API call limit.
 - [ ] Support http proxy.

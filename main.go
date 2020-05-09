@@ -38,6 +38,6 @@ func main() {
 	}
 	err = server.Run(":" + realPort)
 	if err != nil {
-		log.Print(err)
+		log.Println(err)
 	}
 }
