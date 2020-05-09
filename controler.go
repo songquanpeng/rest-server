@@ -42,9 +42,10 @@ func Post(c *gin.Context) {
 }
 
 func Put(c *gin.Context) {
-	//path := strings.ToLower(c.Param("path"))
 	var data model.Data
-	_ = c.BindJSON(&data)
+	data.Path = strings.ToLower(c.Param("path"))
+	body, _ := ioutil.ReadAll(c.Request.Body)
+	data.Data = string(body)
 	var err = model.Update(&data)
 	if err == nil {
 		c.JSON(http.StatusOK, gin.H{

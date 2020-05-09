@@ -42,6 +42,6 @@ func Delete(path string) error {
 }
 
 func Update(data *Data) error {
-	err := DB.Where("path = ?", data.Path).Update("data", data).Error
+	err := DB.Model(&data).Where("path = ?", data.Path).Update("data", data).Error
 	return err
 }
